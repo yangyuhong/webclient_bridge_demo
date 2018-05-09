@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>h5 js 方法页面</title>
+</head>
+<body>
+<p id="p"> p 标签</p>
+<script type="text/javascript">
+//无参无返回值方法
+function show(){
+    console.log("show function");
+     <!--alert("Hello")-->
+document.getElementById('p').innerHTML = 'Hello,World!';
+}
+
+//有参无返回值
+function show(message){
+console.log("show message");
+document.getElementById('p').innerHTML = message;
+
+}
+
+//有参有返回值
+function shwoReturnData(message){
+document.getElementById('p').innerHTML = message;
+return message;
+}
+
+function getAndroidFun(){
+console.log('')
+var result = window.android.back();
+show(result);
+}
+<!--getAndroidFun();-->
+</script>
+
+</body>
+</html>

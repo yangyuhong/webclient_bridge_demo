@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>js 调用 java</title>
+</head>
+<body>
+<p>
+    <input type="text" id="text1" value="调用Android的Toast方法" />
+
+</p>
+<p>
+    <input type="button" id="enter" value="调用android 的方法" onClick="testClick();" />
+</p>
+<script type="text/javascript">
+        //发送消息给android
+        function testClick(){
+            var data = document.getElementById('text1').value;
+            //调用java中的方法，submitFormWeb的方法名
+            window.WebViewJavascriptBridge.callHandler('submitFromWeb',{'param':data},function(responseData){
+                alert(responseData)
+            });
+            }
+
+
+        //注册事件监听
+        function connectWebViewJavascriptBridge(callback){
+            if(window.WebViewJavascriptBridge){
+                callback(WebViewJavascriptBridge)
+            }else{
+                document.addEventListener(
+                    'WebViewJavascriptBridgeReady',
+                    function(){
+                        callback(WebViewJavascriptBridge)
+                    },false
+                    );
+            }
+        }
+
+//注册回调函数，第一次连接时调用初始化的函数
+connectWebViewJavascriptBridge(function(bridge){
+    //初始化
+    bridge.init(function(message,responseCallback){
+        var data = {
+            'javascript Responds':'Wee!'
+        };
+        responseCallback(data);
+    });
+    //接收安卓发来的消息，并返回给安卓通知
+    bridge.registerHandler('functionInJs',function(data,responseCallback){
+        alert(data);
+        var responseCallback = '我接受了安卓的调用';
+        responseCallback(responseCallback);
+    })
+})
+
+    </script>
+
+</body>
+</html>
